@@ -1,0 +1,120 @@
+library ieee;
+use 	ieee.std_logic_1164.all;
+use 	ieee.std_logic_unsigned.all;
+
+entity converter is
+	port (
+		inputTeclado		: in std_logic_vector(7 downto 0);
+		clock				: in std_logic;
+		characterConverted	: out std_logic_vector(5 downto 0);
+		backspace			: out std_logic;
+		escrever			: out std_logic;
+		enter				: out std_logic
+ 	) ;
+end converter;
+architecture behavior of converter is
+		signal charFromKeyboard : std_logic_vector(7 downto 0);
+begin
+	process (clock)
+	begin
+	if rising_edge(clock) then
+		escrever <='0';
+		charFromKeyboard <= inputTeclado;
+		case charFromKeyboard is
+			when b"00011100" => characterConverted <= b"000001";
+			escrever <= '1';
+			when b"00110010" => characterConverted <= b"000010";
+			escrever <= '1';
+			when b"00100001" => characterConverted <= b"000011";
+			escrever <= '1';
+			when b"00100011" => characterConverted <= b"000100";
+			escrever <= '1';
+			when b"00100100" => characterConverted <= b"000101";
+			escrever <= '1';
+			when b"00101011" => characterConverted <= b"000110";
+			escrever <= '1';
+			when b"00110100" => characterConverted <= b"000111";
+			escrever <= '1';
+			when b"00110011" => characterConverted <= b"001000";
+			escrever <= '1';
+			when b"01000011" => characterConverted <= b"001001";
+			escrever <= '1';
+			when b"00111011" => characterConverted <= b"001010"; -- j
+			escrever <= '1';
+			when b"01000010" => characterConverted <= b"001011";
+			escrever <= '1';
+			when b"01001011" => characterConverted <= b"001100"; -- l
+			escrever <= '1';
+			when b"00111010" => characterConverted <= b"001101"; --m
+			escrever <= '1';
+			when b"00110001" => characterConverted <= b"001110"; -- n
+			escrever <= '1';
+			when b"01000100" => characterConverted <= b"001111"; -- o
+			escrever <= '1';
+			when b"01001101" => characterConverted <= b"010000"; -- p
+			escrever <= '1';
+			when b"00010101" => characterConverted <= b"010001"; -- q
+			escrever <= '1';
+			when b"00101101" => characterConverted <= b"010010"; -- r
+			escrever <= '1';
+			when b"00011011" => characterConverted <= b"010011";
+			escrever <= '1';
+			when b"00101100" => characterConverted <= b"010100";
+			escrever <= '1';
+			when b"00111100" => characterConverted <= b"010101";
+			escrever <= '1';
+			when b"00101010" => characterConverted <= b"010110";
+			escrever <= '1';
+			when b"00011101" => characterConverted <= b"010111";
+			escrever <= '1';
+			when b"00100010" => characterConverted <= b"011000"; -- x
+			escrever <= '1';
+			when b"00110101" => characterConverted <= b"011001";
+			escrever <= '1';
+			when b"00011010" => characterConverted <= b"011010";
+			escrever <= '1';
+			when b"00010110" => characterConverted <= b"110001"; --1
+			escrever <= '1';
+			when b"00011110" => characterConverted <= b"110010";
+			escrever <= '1';
+			when b"00100110" => characterConverted <= b"110011";
+			escrever <= '1';
+			when b"00100101" => characterConverted <= b"110100";
+			escrever <= '1';
+			when b"00101110" => characterConverted <= b"110101";
+			escrever <= '1';
+			when b"00110110" => characterConverted <= b"110110";
+			escrever <= '1';
+			when b"00111101" => characterConverted <= b"110111";
+			escrever <= '1';
+			when b"00111110" => characterConverted <= b"111000";
+			escrever <= '1';
+			when b"01000110" => characterConverted <= b"111001";
+			escrever <= '1';
+			when b"01000101" => characterConverted <= b"110000"; -- 0
+			escrever <= '1';
+			when b"01100110" => characterConverted <= b"000000"; -- backspace
+			escrever <= '1';
+			when b"01011010" => characterConverted <= b"000000"; -- enter
+			escrever <= '1';
+			when b"00101001" => characterConverted <= b"000000"; -- espaço
+			escrever <='1';
+			
+			when others => characterConverted <= b"100010";
+			escrever <= '0';
+		end case;
+		-- Não esquecer de incluir no relatório que o backspace vem daqui!!!
+		if charFromKeyboard = b"01100110" then -- backspace
+			backspace <= '1';
+		else
+			backspace <= '0';
+		end if;
+		if charFromKeyboard = b"01011010" then
+			enter <= '1';
+		else
+			enter <= '0';
+		end if;
+	end if;
+	end process;
+end behavior;
+				
